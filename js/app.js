@@ -72,33 +72,28 @@ function parseCSV(csvText) {
  * 3. Almacena el catálogo y lo muestra en productos.html.
  */
 async function cargarProductos() {
-    if (!PRODUCTS_CONTAINER) return; // Solo ejecuta en productos.html
-
     try {
         const response = await fetch(SHEET_URL);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const dataCSV = await response.text();
-        
-        productosCatalogo = parseCSV(dataCSV);
-        
-        // Ocultar mensaje de carga
-        if (LOADING_MESSAGE) {
-            LOADING_MESSAGE.style.display = 'none';
-        }
 
-        mostrarProductosEnCatalogo(productosCatalogo);
+        const dataCSV = await response.text();
+        productosCatalogo = parseCSV(dataCSV);
+
+        // 👇 SOLO renderiza si estamos en productos.html
+        if (PRODUCTS_CONTAINER) {
+            if (LOADING_MESSAGE) {
+                LOADING_MESSAGE.style.display = 'none';
+            }
+            mostrarProductosEnCatalogo(productosCatalogo);
+        }
 
     } catch (error) {
-        console.error("Error al cargar productos desde Google Sheets:", error);
-        if (LOADING_MESSAGE) {
-            LOADING_MESSAGE.textContent = "¡Error al cargar el menú! Revisa la URL de tu Hoja de Google o la conexión.";
-            LOADING_MESSAGE.classList.remove('alert-info');
-            LOADING_MESSAGE.classList.add('alert-danger');
-        }
+        console.error("Error al cargar productos:", error);
     }
 }
+
 
 // =======================================================
 // RENDERIZADO DEL CATÁLOGO
