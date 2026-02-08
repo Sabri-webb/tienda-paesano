@@ -1,6 +1,6 @@
 // =======================================================
 // CARRITO.JS
-// Maneja la vista carrito.html
+// SOLO maneja la vista carrito.html (NO guarda datos)
 // =======================================================
 
 const CART_ITEMS_CONTAINER = document.getElementById("cart-items");
@@ -18,37 +18,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // =======================================================
-// OBTENER CARRITO (usa tu misma key)
-// =======================================================
-
-function obtenerCarrito() {
-    const carritoJSON = localStorage.getItem("ilPaesanoCart");
-    return carritoJSON ? JSON.parse(carritoJSON) : [];
-}
-
-
-// =======================================================
-// GUARDAR CARRITO
-// =======================================================
-
-function guardarCarrito(carrito) {
-    localStorage.setItem("ilPaesanoCart", JSON.stringify(carrito));
-    mostrarCarrito();
-}
-
-
-// =======================================================
 // MOSTRAR CARRITO
 // =======================================================
 
 function mostrarCarrito() {
 
-    const carrito = obtenerCarrito();
+    const carrito = obtenerCarrito(); // 👈 viene de app.js
 
     CART_ITEMS_CONTAINER.innerHTML = "";
 
     if (carrito.length === 0) {
         EMPTY_CART_MESSAGE.classList.remove("d-none");
+        CART_TOTAL_ELEMENT.textContent = "$0.00";
         return;
     }
 
@@ -61,7 +42,7 @@ function mostrarCarrito() {
         const subtotal = item.precio * item.cantidad;
         total += subtotal;
 
-        const fila = `
+        CART_ITEMS_CONTAINER.innerHTML += `
             <tr>
                 <td class="d-flex align-items-center gap-3 text-start">
                     <img src="${item.imagen}" width="60" class="rounded">
@@ -71,20 +52,14 @@ function mostrarCarrito() {
                 <td>$${item.precio.toFixed(2)}</td>
 
                 <td>
-                    <div class="d-flex justify-content-center align-items-center gap-2">
-
+                    <div class="d-flex justify-content-center gap-2">
                         <button class="btn btn-sm btn-outline-secondary"
-                            onclick="cambiarCantidad(${item.id}, -1)">
-                            -
-                        </button>
+                            onclick="cambiarCantidad(${item.id}, -1)">-</button>
 
                         <span>${item.cantidad}</span>
 
                         <button class="btn btn-sm btn-outline-secondary"
-                            onclick="cambiarCantidad(${item.id}, 1)">
-                            +
-                        </button>
-
+                            onclick="cambiarCantidad(${item.id}, 1)">+</button>
                     </div>
                 </td>
 
@@ -93,13 +68,11 @@ function mostrarCarrito() {
                 <td>
                     <button class="btn btn-sm btn-danger"
                         onclick="eliminarItem(${item.id})">
-                        <i class="bi bi-trash"></i>
+                        🗑
                     </button>
                 </td>
             </tr>
         `;
-
-        CART_ITEMS_CONTAINER.innerHTML += fila;
     });
 
     CART_TOTAL_ELEMENT.textContent = `$${total.toFixed(2)}`;
@@ -117,13 +90,13 @@ function cambiarCantidad(id, cambio) {
     carrito = carrito.map(item => {
         if (item.id === id) {
             item.cantidad += cambio;
-
             if (item.cantidad < 1) item.cantidad = 1;
         }
         return item;
     });
 
-    guardarCarrito(carrito);
+    guardarCarrito(carrito); // 👈 app.js
+    mostrarCarrito();        // 👈 refresca tabla
 }
 
 
@@ -138,6 +111,7 @@ function eliminarItem(id) {
     carrito = carrito.filter(item => item.id !== id);
 
     guardarCarrito(carrito);
+    mostrarCarrito();
 }
 
 
@@ -149,8 +123,10 @@ function vaciarCarrito() {
 
     if (!confirm("¿Vaciar carrito completo?")) return;
 
-    localStorage.removeItem("ilPaesanoCart");
+    localStorage.removeItem(CART_STORAGE_KEY); // 👈 misma key de app.js
+
     mostrarCarrito();
+    actualizarContadorCarrito();
 }
 
 
@@ -179,7 +155,6 @@ function finalizarPedido() {
 
     mensaje += `%0A💰 Total: $${total}`;
 
-    // ⚠️ CAMBIA POR TU NÚMERO
     const telefono = "5493518095270";
 
     window.open(`https://wa.me/${telefono}?text=${mensaje}`, "_blank");
