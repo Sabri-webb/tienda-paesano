@@ -246,10 +246,12 @@ function filtrarProductos() {
 // INICIALIZACIÓN
 // =======================================================
 
-// Llamada para cargar el catálogo solo en productos.html
-if (PRODUCTS_CONTAINER) {
+// Cargar catálogo SIEMPRE (para que el carrito funcione en todas las páginas)
+document.addEventListener('DOMContentLoaded', () => {
     cargarProductos();
-}
+    actualizarContadorCarrito();
+});
+
 
 // Llamada para asegurar que el contador del carrito se actualice en TODAS las páginas
 actualizarContadorCarrito();
