@@ -19,16 +19,33 @@
 <body class="bg-light">
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-dark bg-dark px-3">
-    <a href="index.html" class="navbar-brand fw-bold">
-        🍔 Il Paesano
-    </a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-lg">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="index.html">🍕 Il Paesano</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="productos.html">Ver Menú</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacto.html">Ubicación y Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white ms-lg-3" href="carrito.html">
+                            <i class="bi bi-basket me-1"></i>  Pedido 🛒 <span id="cart-count" class="badge bg-danger">0</span>
+                        </a>
 
-    <a href="productos.html" class="btn btn-outline-light">
-        ← Seguir comprando
-    </a>
-</nav>
-
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
 <!-- CONTENEDOR -->
 <div class="container my-5">
@@ -76,9 +93,9 @@
                     <span class="fw-bold fs-5 text-danger" id="cart-total">$0.00</span>
                 </div>
 
-                <button onclick="finalizarPedido()" class="btn btn-success w-100 mb-2">
-                    <i class="bi bi-whatsapp"></i> Finalizar pedido
-                </button>
+                <a href="checkout.html" class="btn btn-success w-100 mb-2">
+                    <i class="bi bi-whatsapp"></i> Continuar pedido
+                </a>
 
                 <button onclick="vaciarCarrito()" class="btn btn-outline-danger w-100">
                     Vaciar carrito
