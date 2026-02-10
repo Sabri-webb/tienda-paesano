@@ -46,21 +46,23 @@
         </div>
     </nav>
 
-    <header class="py-5 bg-light border-bottom">
+    <header class="hero-food-section text-center">
         <div class="container">
-            <h1 class="display-4 fw-bold text-center">Nuestro Menú Completo</h1>
-            <p class="lead text-center text-muted">Explora todas nuestras categorías: Pizzas, Pastas, Ensaladas y Postres.</p>
+            <h1 class="display-4 fw-bolder">Nuestro Menú</h1>
+            <p class="lead my-3 fs-5">Elegí tus platos favoritos y armá tu pedido</p>
         </div>
     </header>
 
-    <section class="py-5">
+
+    <section class="py-5 bg-light">
         <div class="container">
             <div id="loading-message" class="alert alert-info text-center" role="alert">
                 Cargando el menú desde la base de datos...
             </div>
 
-            <div class="mb-4">
-                <input type="text" class="form-control" id="search-input" placeholder="Buscar plato por nombre..." onkeyup="filtrarProductos()">
+            <div class="input-group shadow-sm mb-4">
+                <span class="input-group-text bg-white"> <i class="bi bi-search"></i> </span>
+                <input type="text" class="form-control form-control-lg" id="search-input" placeholder="Buscar plato..." onkeyup="filtrarProductos()">
             </div>
 
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="products-container">
@@ -82,24 +84,6 @@
     
     <script src="js/app.js"></script>
 
-    <script>
-        // Inicialización del año en el footer
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        // NOTA: Las funciones cargarProductos(), agregarAlCarrito() y filtrarProductos() 
-        // serán definidas en el archivo externo 'js/app.js'.
-        
-        // Al cargar la página de productos, llamamos a la función principal de JS
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof cargarProductos === 'function') {
-                cargarProductos(); 
-            } else {
-                console.error("Error: La función cargarProductos no se encuentra en app.js");
-                document.getElementById('loading-message').textContent = "Error: No se pudo cargar la lógica de la tienda (app.js).";
-                document.getElementById('loading-message').classList.add('alert-danger');
-                document.getElementById('loading-message').classList.remove('alert-info');
-            }
-        });
-    </script>
+    
 </body>
 </html>

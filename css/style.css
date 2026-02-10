@@ -9,103 +9,143 @@
     --gris-claro: #f8f9fa;
 }
 
+
 /* =========================
    ESTILOS GENERALES
 ========================= */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--gris-claro);
+    scroll-behavior: smooth;
 }
 
 a {
     text-decoration: none;
 }
 
+
 /* =========================
-   NAVBAR
+   NAVBAR (más moderno)
 ========================= */
+.navbar {
+    backdrop-filter: blur(8px);
+}
+
 .navbar-brand {
     letter-spacing: 1px;
+    font-weight: 700;
 }
 
 .navbar .nav-link {
-    transition: color 0.3s ease;
+    transition: 0.2s ease;
 }
 
 .navbar .nav-link:hover {
     color: var(--amarillo);
+    transform: translateY(-2px);
 }
 
 /* Botón carrito */
 .navbar .btn-primary {
     background-color: var(--rojo);
     border: none;
+    border-radius: 12px;
+    font-weight: 600;
 }
 
 .navbar .btn-primary:hover {
     background-color: #a93226;
 }
 
+
 /* =========================
-   HERO SECTION
+   HERO SECTION (impacto visual)
 ========================= */
 .hero-food-section {
+    min-height: 75vh;
+
     background:
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.65)),
         url("../img/hero-food.jpg") center/cover no-repeat;
+
     color: white;
-    padding: 120px 20px;
+
+    display: flex;
+    align-items: center;
 }
 
 .hero-food-section h1 {
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    text-shadow: 2px 2px 10px rgba(0,0,0,.7);
 }
 
 .hero-food-section p {
-    max-width: 700px;
+    max-width: 650px;
     margin: 0 auto;
 }
 
+
 /* =========================
-   PRODUCTOS DESTACADOS
+   SECCIONES (más aire)
 ========================= */
-#destacados h2 {
-    position: relative;
+section {
+    padding-top: 80px;
+    padding-bottom: 80px;
 }
 
+
+/* =========================
+   CARDS ESTILO DELIVERY PRO
+========================= */
+
+/*.product-card,
 .plato-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 12px;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: 0.25s ease;
+}*/
+
+.card.plato-card,
+.card.product-card {
+    border-radius: 18px !important;
+    overflow: hidden;
 }
 
+
+.product-card:hover,
 .plato-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    transform: translateY(-6px);
+    box-shadow: 0 14px 32px rgba(0,0,0,.18);
 }
 
-.plato-card img {
+.card-img-top {
     height: 200px;
     object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
 }
 
-.plato-card .btn-success {
-    background-color: var(--verde);
-    border: none;
-}
-
-.plato-card .btn-success:hover {
-    background-color: #1e8449;
-}
-
-/* Precio */
+/* Precio más visible */
+.price-tag,
 .plato-card .text-danger {
+    font-size: 1.5rem;
+    font-weight: 800;
     color: var(--rojo) !important;
 }
 
+/* Botón añadir */
+.btn-success {
+    background-color: var(--verde);
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.btn-success:hover {
+    background-color: #1e8449;
+    transform: scale(1.03);
+}
+
+
 /* =========================
-   SECCIÓN ABOUT
+   ABOUT
 ========================= */
 #about {
     background-color: white;
@@ -118,7 +158,9 @@ a {
 #about img {
     max-height: 350px;
     object-fit: cover;
+    border-radius: 18px;
 }
+
 
 /* =========================
    FOOTER
@@ -128,12 +170,13 @@ footer {
 }
 
 footer a {
-    transition: color 0.3s ease;
+    transition: 0.3s;
 }
 
 footer a:hover {
-    color: white;
+    color: var(--amarillo);
 }
+
 
 /* =========================
    BOTONES GENERALES
@@ -141,37 +184,44 @@ footer a:hover {
 .btn-warning {
     background-color: var(--amarillo);
     border: none;
+    border-radius: 12px;
+    font-weight: 700;
 }
 
 .btn-warning:hover {
     background-color: #d4ac0d;
 }
 
+
 /* =========================
-   RESPONSIVE AJUSTES
+   RESPONSIVE (mobile first)
 ========================= */
 @media (max-width: 768px) {
+
     .hero-food-section {
-        padding: 80px 15px;
+        min-height: 60vh;
+        padding: 60px 15px;
     }
 
     .hero-food-section h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+    }
+
+    section {
+        padding-top: 50px;
+        padding-bottom: 50px;
     }
 }
 
-.product-card {
-            min-height: 400px; /* Asegura una altura mínima para las cards */
-            display: flex;
-            flex-direction: column;
-        }
-        .card-body {
-            flex-grow: 1; /* Permite que el cuerpo de la tarjeta ocupe el espacio restante */
-        }
-        .card-footer {
-            margin-top: auto; /* Empuja el footer (botón) al final de la card */
-        }
-        .card-img-top {
-            height: 200px; /* Altura fija para las imágenes */
-            object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
-        }
+
+/* =========================
+   MICRO ANIMACIONES UX
+========================= */
+.btn {
+    transition: 0.2s ease;
+}
+
+.btn:active {
+    transform: scale(0.96);
+}
+

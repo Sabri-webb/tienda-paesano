@@ -61,59 +61,85 @@
         </div>
     </nav>
 
-    <header class="hero-food-section text-center">
-        <div class="container">
-            <h1 class="display-1 fw-bolder">Sabor Casero y al instaante</h1>
-            <p class="lead my-4 fs-4">Los mejores lomitos  y pizzas de la ciudad, ¡directo a tu mesa!</p>
-            <a href="productos.html" class="btn btn-warning btn-lg fw-bold shadow-lg text-dark">
-                <i class="bi bi-cart-fill me-2"></i> Haz tu Pedido Ahora
+    <header class="hero-food-section text-center text-white d-flex align-items-center">
+    <div class="container py-5">
+
+        <h1 class="display-3 fw-bold mb-3">
+            🍕 Sabor casero, rápido y caliente
+        </h1>
+
+        <p class="lead mb-4">
+            Pedí online en 1 minuto • Retirá o te lo llevamos a casa
+        </p>
+
+        <div class="d-flex flex-column flex-md-row justify-content-center gap-3">
+            <a href="productos.html" class="btn btn-warning btn-lg fw-bold px-5">
+                🛒 Pedir ahora
             </a>
-            <a href="contacto.html" class="btn btn-outline-light btn-lg fw-bold shadow-lg ms-3">
-                <i class="bi bi-geo-alt-fill me-2"></i> Ver Ubicación
+
+            <a href="contacto.html" class="btn btn-outline-light btn-lg px-4">
+                📍 Cómo llegar
             </a>
         </div>
-    </header>
 
+    </div>
+</header>
     <section id="destacados" class="py-5 bg-light">
         <div class="container">
             <h2 class="text-center mb-5 fw-bold text-dark">Nuestros productos estrellas ⭐</h2>
             
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 
-                <div class="col">
-                    <div class="card h-100 plato-card border-0 shadow-sm">
-                        <img src="img/plato-pizza.jpg" class="card-img-top" alt="Pizza Margarita">
+               <div class="card h-100 plato-card border-0 shadow-sm product-card">
+                    <img src="img/plato-pizza.jpg" class="card-img-top product-img" alt="Pizza Margarita">
+
                         <div class="card-body text-center">
-                            <h5 class="card-title fw-bold">Lomo completo con Fritas</h5>
-                            <p class="card-text text-muted">Bife de carne, huevo, tomate, jamon y... muchooo queso.</p>
-                            <p class="text-danger fw-bold fs-5">$125000</p>
-                            <button onclick="agregarAlCarrito(1)" class="btn btn-success"><i class="bi bi-plus-circle me-2"></i> Añadir</button>
+                            <h5 class="fw-bold">Lomo completo con fritas</h5>
+
+                            <p class="small text-muted">Bife, huevo, jamón y muuucho queso</p>
+
+                            <p class="price-tag">$12.500</p>
+
+                            <button onclick="agregarAlCarrito(1)" class="btn btn-success w-100 fw-bold">
+                                ➕ Añadir al pedido
+                            </button>
                         </div>
-                    </div>
                 </div>
 
                 <div class="col">
-                    <div class="card h-100 plato-card border-0 shadow-sm">
-                        <img src="img/plato-pasta.jpg" class="card-img-top" alt="Lasaña Bolognesa">
+                    <div class="card h-100 plato-card border-0 shadow-sm product-card">
+                    <img src="img/plato-pizza.jpg" class="card-img-top product-img" alt="Pizza Margarita">
+
                         <div class="card-body text-center">
-                            <h5 class="card-title fw-bold">Combo Pizzero</h5>
-                            <p class="card-text text-muted">2 pizzas de Muzza + 2 ppizzas napolitanas.</p>
-                            <p class="text-danger fw-bold fs-5">$30000</p>
-                            <button onclick="agregarAlCarrito(2)" class="btn btn-success"><i class="bi bi-plus-circle me-2"></i> Añadir</button>
+                            <h5 class="fw-bold">Lomo completo con fritas</h5>
+
+                            <p class="small text-muted">Bife, huevo, jamón y muuucho queso</p>
+
+                            <p class="price-tag">$12.500</p>
+
+                            <button onclick="agregarAlCarrito(1)" class="btn btn-success w-100 fw-bold">
+                                ➕ Añadir al pedido
+                            </button>
                         </div>
-                    </div>
+                </div>
                 </div>
 
                 <div class="col">
-                    <div class="card h-100 plato-card border-0 shadow-sm">
-                        <img src="img/lomocompleto.png" class="card-img-top" alt="Tiramisú">
+                   <div class="card h-100 plato-card border-0 shadow-sm product-card">
+                    <img src="img/plato-pizza.jpg" class="card-img-top product-img" alt="Pizza Margarita">
+
                         <div class="card-body text-center">
-                            <h5 class="card-title fw-bold">Combo Cancha</h5>
-                            <p class="card-text text-muted">2 Choris + 1 Coca de 1litro.</p>
-                            <p class="text-danger fw-bold fs-5">$12000</p>
-                            <button onclick="agregarAlCarrito(3)" class="btn btn-success"><i class="bi bi-plus-circle me-2"></i> Añadir</button>
+                            <h5 class="fw-bold">Lomo completo con fritas</h5>
+
+                            <p class="small text-muted">Bife, huevo, jamón y muuucho queso</p>
+
+                            <p class="price-tag">$12.500</p>
+
+                            <button onclick="agregarAlCarrito(1)" class="btn btn-success w-100 fw-bold">
+                                ➕ Añadir al pedido
+                            </button>
                         </div>
-                    </div>
+                </div>
                 </div>
 
             </div>
