@@ -244,16 +244,22 @@ function guardarCarrito(carrito) {
 function agregarAlCarrito(productoId) {
     const producto = productosCatalogo.find(p => p.id === productoId);
 
-    // Si no existe o no hay stock → simplemente salir
-    if (!producto || producto.stock <= 0) return;
+    // Si no existe o no hay stock → salir silencioso
+    if (!producto || producto.stock <= 0) {
+        mostrarToast("Producto no disponible");
+        return;
+    }
 
     let carrito = obtenerCarrito();
     const itemExistente = carrito.find(item => item.id === productoId);
 
     if (itemExistente) {
-        // sumar solo si hay stock
         if (itemExistente.cantidad < producto.stock) {
             itemExistente.cantidad++;
+            mostrarToast(`${producto.nombre} +1`);
+        } else {
+            mostrarToast("Stock máximo alcanzado");
+            return;
         }
     } else {
         carrito.push({
@@ -263,12 +269,33 @@ function agregarAlCarrito(productoId) {
             imagen: producto.imagen,
             cantidad: 1
         });
+
+        mostrarToast(`${producto.nombre} añadido`);
     }
 
     guardarCarrito(carrito);
-
-    actualizarContadorCarrito(); // opcional si tenés badge
+    actualizarContadorCarrito();
 }
+
+
+/**TOAST */
+
+// ===============================
+// TOAST Bootstrap
+// ===============================
+function mostrarToast(mensaje = "Producto añadido") {
+    const toastEl = document.getElementById('cartToast');
+    if (!toastEl) return;
+
+    toastEl.querySelector('.toast-body').textContent = mensaje;
+
+    const toast = new bootstrap.Toast(toastEl, {
+        delay: 1800
+    });
+
+    toast.show();
+}
+
 
 
 /**

@@ -108,6 +108,8 @@ section {
 .card.product-card {
     border-radius: 18px !important;
     overflow: hidden;
+    transition: .25s ease;
+
 }
 
 
@@ -118,7 +120,7 @@ section {
 }
 
 .card-img-top {
-    height: 200px;
+    height: 220px;
     object-fit: cover;
 }
 
@@ -136,6 +138,8 @@ section {
     border: none;
     border-radius: 12px;
     font-weight: 600;
+    padding: 12px;
+
 }
 
 .btn-success:hover {
