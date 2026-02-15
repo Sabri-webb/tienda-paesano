@@ -115,7 +115,7 @@ function mostrarProductosEnCatalogo(productos) {
             `<p class="text-danger fw-bold mb-2">Agotado</p>`;
         
         const button = producto.stock > 0 ? 
-            `<button onclick="agregarAlCarrito(${producto.id})" class="btn btn-success w-100"><i class="bi bi-plus-circle me-2"></i> Añadir al Pedido</button>` :
+            `<button onclick="agregarAlCarrito(${producto.id})" class="btn btn-success w-100"></i> ➕ Añadir al Pedido</button>` :
             `<button class="btn btn-secondary w-100" disabled><i class="bi bi-x-circle me-2"></i> Sin Stock</button>`;
 
         const precioFormateado = `$${producto.precio.toFixed(2)}`;
