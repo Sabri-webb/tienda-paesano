@@ -103,7 +103,7 @@ async function cargarProductos() {
  * Genera el HTML de las Cards de Bootstrap e inyecta en el DOM.
  * @param {Array<Object>} productos - Array de productos a mostrar.
  */
-function mostrarProductosEnCatalogo(productos) {
+/**function mostrarProductosEnCatalogo(productos) {
     if (!PRODUCTS_CONTAINER) return;
 
     let htmlContent = '';
@@ -139,7 +139,81 @@ function mostrarProductosEnCatalogo(productos) {
     });
     
     PRODUCTS_CONTAINER.innerHTML = htmlContent;
+}*/
+
+function mostrarProductosEnCatalogo(productos) {
+    if (!PRODUCTS_CONTAINER) return;
+
+    let htmlContent = '';
+
+    productos.forEach(producto => {
+
+        const cantidad = cantidadEnCarrito(producto.id);
+
+        // Estado de stock
+        const stockStatus = producto.stock > 0
+            ? `<p class="text-success fw-bold mb-2">Disponible (${producto.stock} uds)</p>`
+            : `<p class="text-danger fw-bold mb-2">Agotado</p>`;
+
+        // 🔥 NUEVA LÓGICA DEL BOTÓN (+ / -)
+        let button = '';
+
+        if (producto.stock <= 0) {
+            button = `
+                <button class="btn btn-secondary w-100" disabled>
+                    Sin Stock
+                </button>
+            `;
+        }
+        else if (cantidad === 0) {
+            button = `
+                <button onclick="agregarAlCarrito(${producto.id}); cargarProductos();"
+                    class="btn btn-success w-100 fw-bold">
+                    ➕ Añadir al Pedido
+                </button>
+            `;
+        }
+        else {
+            button = `
+                <div class="d-flex justify-content-center align-items-center gap-3">
+                    <button class="btn btn-outline-danger btn-sm"
+                        onclick="quitarDelCarrito(${producto.id}); cargarProductos();">
+                        −
+                    </button>
+
+                    <span class="fw-bold fs-5">${cantidad}</span>
+
+                    <button class="btn btn-outline-success btn-sm"
+                        onclick="agregarAlCarrito(${producto.id}); cargarProductos();">
+                        +
+                    </button>
+                </div>
+            `;
+        }
+
+        const precioFormateado = `$${producto.precio.toFixed(2)}`;
+
+        htmlContent += `
+            <div class="col">
+                <div class="card h-100 plato-card product-card border-0 shadow-sm">
+                    <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">${producto.nombre}</h5>
+                        <p class="card-text text-muted">${producto.descripcion}</p>
+                    </div>
+                    <div class="card-footer bg-white border-0 text-center">
+                        ${stockStatus}
+                        <p class="text-danger fw-bold fs-5 mb-2">${precioFormateado}</p>
+                        ${button}
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    PRODUCTS_CONTAINER.innerHTML = htmlContent;
 }
+
 
 // =======================================================
 // GESTIÓN DEL CARRITO (LOCAL STORAGE)
@@ -170,24 +244,18 @@ function guardarCarrito(carrito) {
 function agregarAlCarrito(productoId) {
     const producto = productosCatalogo.find(p => p.id === productoId);
 
-    if (!producto || producto.stock <= 0) {
-        alert('Este producto no está disponible o no existe.');
-        return;
-    }
+    // Si no existe o no hay stock → simplemente salir
+    if (!producto || producto.stock <= 0) return;
 
     let carrito = obtenerCarrito();
     const itemExistente = carrito.find(item => item.id === productoId);
 
     if (itemExistente) {
-        // Verificar stock antes de añadir
+        // sumar solo si hay stock
         if (itemExistente.cantidad < producto.stock) {
             itemExistente.cantidad++;
-        } else {
-            alert(`No hay suficiente stock disponible para ${producto.nombre}.`);
-            return;
         }
     } else {
-        // Añadir nuevo ítem al carrito
         carrito.push({
             id: producto.id,
             nombre: producto.nombre,
@@ -198,8 +266,10 @@ function agregarAlCarrito(productoId) {
     }
 
     guardarCarrito(carrito);
-    alert(`"${producto.nombre}" añadido al pedido.`);
+
+    actualizarContadorCarrito(); // opcional si tenés badge
 }
+
 
 /**
  * Actualiza el número total de ítems en el ícono del carrito en el navbar.
@@ -250,3 +320,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Llamada para asegurar que el contador del carrito se actualice en TODAS las páginas
 actualizarContadorCarrito();
+
+//actualizar boton al agregar
+
+function cantidadEnCarrito(productoId) {
+    const carrito = obtenerCarrito();
+    const item = carrito.find(i => i.id === productoId);
+    return item ? item.cantidad : 0;
+}
+
+//quitar del carrito
+function quitarDelCarrito(id) {
+    let carrito = obtenerCarrito();
+
+    carrito = carrito.map(p => {
+        if (p.id === id) p.cantidad--;
+        return p;
+    }).filter(p => p.cantidad > 0);
+
+    guardarCarrito(carrito);
+}
