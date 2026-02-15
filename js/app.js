@@ -122,7 +122,7 @@ function mostrarProductosEnCatalogo(productos) {
 
         htmlContent += `
             <div class="col">
-                <div class="card h-100 plato-card border-0 shadow-sm">
+                <div class="card h-100 plato-card product-card border-0 shadow-sm">
                     <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
                     <div class="card-body">
                         <h5 class="card-title fw-bold">${producto.nombre}</h5>
