@@ -67,133 +67,66 @@
 
             <!-- Carrito SIEMPRE visible -->
             <a class="nav-link btn btn-primary text-white ms-lg-3 position-relative" href="carrito.html">
-                <i class="bi bi-basket me-1"></i>  <span id="cart-count"  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">  0  </span>   </a>
+                <i class="bi bi-basket me-1"></i>  <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">  0  </span>   </a>
 
 
         </div>
     </nav>
 
 
-    <header class="hero-food-section text-center text-white d-flex align-items-center">
-    <div class="container py-5">
+    <!-- ================= HERO ================= -->
+<section class="bg-light py-5 text-center">
+    <div class="container">
 
-        <h1 class="display-3 fw-bold mb-3">
-            🍕 Sabor casero, rápido y caliente
+        <h1 class="display-5 fw-bold mb-3">
+            🍕 Bienvenido a Il Paesano
         </h1>
 
-        <p class="lead mb-4">
-            Pedí online en 1 minuto • Retirá o te lo llevamos a casa
+        <p class="lead text-muted">
+            Pizzas artesanales, empanadas y más. Pedí online en segundos.
         </p>
 
-        <div class="d-flex flex-column flex-md-row justify-content-center gap-3">
-            <a href="productos.html" class="btn btn-warning btn-lg fw-bold px-5">
-                🛒 Pedir ahora
-            </a>
-
-            <a href="contacto.html" class="btn btn-outline-light btn-lg px-4">
-                📍 Cómo llegar
-            </a>
-        </div>
+        <a href="productos.html" class="btn btn-success btn-lg mt-3 px-5">
+            Ver menú completo
+        </a>
 
     </div>
-</header>
-    <section id="destacados" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5 fw-bold text-dark">Nuestros productos estrellas ⭐</h2>
-            
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                
-               <div class="card h-100 plato-card border-0 shadow-sm product-card">
-                    <img src="img/plato-pizza.jpg" class="card-img-top product-img" alt="Pizza Margarita">
+</section>
 
-                        <div class="card-body text-center">
-                            <h5 class="fw-bold">Lomo completo con fritas</h5>
 
-                            <p class="small text-muted">Bife, huevo, jamón y muuucho queso</p>
+<!-- ================= DESTACADOS ================= -->
+<section class="container py-5">
 
-                            <p class="price-tag">$12.500</p>
+    <h2 class="fw-bold mb-4 text-center">
+        ⭐ Más pedidos
+    </h2>
 
-                            <button onclick="agregarAlCarrito(1)" class="btn btn-success w-100 fw-bold">
-                                ➕ Añadir al pedido
-                            </button>
-                        </div>
-                </div>
+    <!-- 👇 MISMO CONTENEDOR QUE USA app.js -->
+    <div id="products-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    </div>
 
-                <div class="col">
-                    <div class="card h-100 plato-card border-0 shadow-sm product-card">
-                    <img src="img/plato-pizza.jpg" class="card-img-top product-img" alt="Pizza Margarita">
+</section>
 
-                        <div class="card-body text-center">
-                            <h5 class="fw-bold">Lomo completo con fritas</h5>
 
-                            <p class="small text-muted">Bife, huevo, jamón y muuucho queso</p>
 
-                            <p class="price-tag">$12.500</p>
+<!-- ================= SCRIPTS ================= -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
 
-                            <button onclick="agregarAlCarrito(1)" class="btn btn-success w-100 fw-bold">
-                                ➕ Añadir al pedido
-                            </button>
-                        </div>
-                </div>
-                </div>
+<script>
+/*
+   🔥 SOLO mostramos 4 productos en el index
+   Reutiliza tu función actual sin tocar nada
+*/
+document.addEventListener("DOMContentLoaded", () => {
 
-                <div class="col">
-                   <div class="card h-100 plato-card border-0 shadow-sm product-card">
-                    <img src="img/plato-pizza.jpg" class="card-img-top product-img" alt="Pizza Margarita">
+    const original = mostrarProductosEnCatalogo;
 
-                        <div class="card-body text-center">
-                            <h5 class="fw-bold">Lomo completo con fritas</h5>
+    mostrarProductosEnCatalogo = function(productos) {
+        original(productos.slice(0, 3)); // solo 4 destacados
+    };
 
-                            <p class="small text-muted">Bife, huevo, jamón y muuucho queso</p>
-
-                            <p class="price-tag">$12.500</p>
-
-                            <button onclick="agregarAlCarrito(1)" class="btn btn-success w-100 fw-bold">
-                                ➕ Añadir al pedido
-                            </button>
-                        </div>
-                </div>
-                </div>
-
-            </div>
-            
-            <div class="text-center mt-5">
-                <a href="productos.html" class="btn btn-outline-dark btn-lg fw-bold">Ver Menú Completo</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="about" class="py-5">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h3 class="fw-bold mb-3">Nuestra Historia</h3>
-                    <p class="lead">Desde nuestra casa, directo a la tuya. Hecho con mucho amor, dediccación y buen sabor.</p>
-                    <p>La pasión por la cocina es lo que nos mueve. Cada plato es preparado con el mismo cariño que un domingo familiar. ¡Te invitamos a ser parte de nuestra familia!</p>
-                </div>
-                <div class="col-md-6 text-center">
-                    <img src="img/restaurant-interior.jpg" alt="Interior del Restaurante" class="img-fluid rounded shadow-lg mt-4 mt-md-0">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-dark text-white py-4 mt-5">
-        <div class="container text-center">
-            <p class="mb-0">&copy; <span id="current-year"></span> Il Paesano. Para toda la familia.</p>
-            <div class="mt-2">
-                <a href="https://share.google/EL0kI979yrg77tlrS" target="_blank" class="text-warning mx-2"><i class="bi bi-google"></i> (Ver en Google)</a>
-                <a href="#" class="text-warning mx-2"><i class="bi bi-whatsapp"></i> Pedidos</a>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
-    <script src="js/app.js"></script>
-
-    <script>
-document.getElementById('current-year').textContent = new Date().getFullYear();
+});
 </script>
 
 </body>
