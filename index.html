@@ -151,12 +151,12 @@
 
 
 <!-- ================= SCRIPTS ================= -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/app.js"></script>
 
 <script>
 /*
-   🔥 SOLO mostramos 4 productos en el index
+   🔥 SOLO mostramos 3 productos en el index
    Reutiliza tu función actual sin tocar nada
 */
 document.addEventListener("DOMContentLoaded", () => {
@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const original = mostrarProductosEnCatalogo;
 
     mostrarProductosEnCatalogo = function(productos) {
-        original(productos.slice(0, 3)); // solo 4 destacados
+        original(productos.slice(0, 3)); // solo 3 destacados
     };
 
 });
