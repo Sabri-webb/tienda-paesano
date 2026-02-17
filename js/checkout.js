@@ -78,11 +78,12 @@ function enviarPedido() {
     const telefonoCliente = document.getElementById("telefono").value;
     const entrega = document.querySelector('input[name="entrega"]:checked').value;
     const pago = document.querySelector('input[name="pago"]:checked').value;
-    const direccion = direccionInput.value;
+    const direccionInput = document.getElementById("direccion");
+    const direccion = direccionInput ? direccionInput.value : "";
 
     if (!nombre || !telefonoCliente) {
-    alert("Completá nombre y teléfono");
-    return;
+        alert("Completá nombre y teléfono");
+        return;
     }
 
     if (entrega === "Envío a domicilio" && !direccion) {
@@ -90,34 +91,49 @@ function enviarPedido() {
         return;
     }
 
+    // =====================
+    // MENSAJE LIMPIO (texto normal)
+    // =====================
 
-
-    let mensaje = "Hola! Quiero hacer el siguiente pedido:%0A%0A";
-
+    let mensaje = "Hola! Quiero hacer el siguiente pedido:\n\n";
     let total = 0;
 
     carrito.forEach(item => {
+
         const subtotal = item.precio * item.cantidad;
         total += subtotal;
-        mensaje += `• ${item.nombre} x${item.cantidad} - $${subtotal}%0A`;
+
+        let linea = `• ${item.nombre} x${item.cantidad}`;
+
+        // ✅ AQUÍ VA LA NOTA
+        if (item.nota && item.nota.trim() !== "") {
+            linea += ` (Nota: ${item.nota})`;
+        }
+
+        linea += ` - $${subtotal}\n`;
+
+        mensaje += linea;
     });
 
-    mensaje += `%0A💰 Total: $${total}%0A`;
-    mensaje += `%0A--- DATOS ---`;
-    mensaje += `%0ANombre: ${nombre}`;
-    mensaje += `%0ATeléfono: ${telefonoCliente}`;
-    mensaje += `%0AEntrega: ${entrega}`;
+    mensaje += `\n💰 Total: $${total}\n\n`;
+    mensaje += `--- DATOS ---\n`;
+    mensaje += `Nombre: ${nombre}\n`;
+    mensaje += `Teléfono: ${telefonoCliente}\n`;
+    mensaje += `Entrega: ${entrega}\n`;
 
     if (entrega === "Envío a domicilio") {
-        mensaje += `%0ADirección: ${direccion}`;
+        mensaje += `Dirección: ${direccion}\n`;
     }
 
-    mensaje += `%0APago: ${pago}`;
+    mensaje += `Pago: ${pago}`;
 
-    const telefonoNegocio = "5493518095270"; // tu número
+    const telefonoNegocio = "5493518095270";
 
-    window.open(`https://wa.me/${telefonoNegocio}?text=${mensaje}`, "_blank");
+    // ✅ encode UNA sola vez
+    const mensajeCodificado = encodeURIComponent(mensaje);
+
+    window.open(`https://wa.me/${telefonoNegocio}?text=${mensajeCodificado}`, "_blank");
 
     localStorage.removeItem("ilPaesanoCart");
-
 }
+

@@ -150,6 +150,10 @@ function mostrarProductosEnCatalogo(productos) {
 
         const cantidad = cantidadEnCarrito(producto.id);
 
+        //pre carga nota
+        const item = obtenerCarrito().find(i => i.id === producto.id);
+        const notaActual = item?.nota || "";
+
         // Estado de stock
         //const stockStatus = producto.stock > 0
            // ? `<p class="text-success fw-bold mb-2">Disponible (${producto.stock} uds)</p>`
@@ -169,7 +173,7 @@ function mostrarProductosEnCatalogo(productos) {
         }
         else if (cantidad === 0) {
             button = `
-                <button onclick="agregarAlCarrito(${producto.id}); cargarProductos();"
+                <button onclick="agregarAlCarrito(${producto.id})"
                     class="btn btn-success w-100 fw-bold">
                     ➕ Añadir al Pedido
                 </button>
@@ -179,14 +183,14 @@ function mostrarProductosEnCatalogo(productos) {
             button = `
                 <div class="d-flex justify-content-center align-items-center gap-3">
                     <button class="btn btn-outline-danger btn-sm"
-                        onclick="quitarDelCarrito(${producto.id}); cargarProductos();">
+                        onclick="quitarDelCarrito(${producto.id})">
                         −
                     </button>
 
                     <span class="fw-bold fs-5">${cantidad}</span>
 
                     <button class="btn btn-outline-success btn-sm"
-                        onclick="agregarAlCarrito(${producto.id}); cargarProductos();">
+                        onclick="agregarAlCarrito(${producto.id})">
                         +
                     </button>
                 </div>
@@ -204,10 +208,19 @@ function mostrarProductosEnCatalogo(productos) {
                         <p class="card-text text-muted">${producto.descripcion}</p>
                     </div>
                     <div class="card-footer bg-white border-0 text-center">
-                        ${stockStatus}
+
                         <p class="text-danger fw-bold fs-5 mb-2">${precioFormateado}</p>
+
+                        <textarea
+                            id="nota-${producto.id}"
+                            class="form-control form-control-sm mb-2"
+                            placeholder="Ej: sin cebolla, extra queso..."
+                        >${notaActual}</textarea>
+
                         ${button}
+
                     </div>
+
                 </div>
             </div>
         `;
@@ -244,32 +257,40 @@ function guardarCarrito(carrito) {
  * @param {number} productoId - El ID del producto a añadir.
  */
 function agregarAlCarrito(productoId) {
+
     const producto = productosCatalogo.find(p => p.id === productoId);
 
-    // Si no existe o no hay stock → salir silencioso
     if (!producto || producto.stock <= 0) {
         mostrarToast("Producto no disponible");
         return;
     }
 
+    const textarea = document.getElementById(`nota-${productoId}`);
+    const notaNueva = textarea ? textarea.value.trim() : "";
+
     let carrito = obtenerCarrito();
     const itemExistente = carrito.find(item => item.id === productoId);
 
     if (itemExistente) {
-        if (itemExistente.cantidad < producto.stock) {
-            itemExistente.cantidad++;
-            mostrarToast(`${producto.nombre} +1`);
-        } else {
-            mostrarToast("Stock máximo alcanzado");
-            return;
+
+        itemExistente.cantidad++;
+
+        // ✅ SOLO actualizar nota si hay texto
+        if (notaNueva !== "") {
+            itemExistente.nota = notaNueva;
         }
+
+        mostrarToast(`${producto.nombre} +1`);
+
     } else {
+
         carrito.push({
             id: producto.id,
             nombre: producto.nombre,
             precio: producto.precio,
             imagen: producto.imagen,
-            cantidad: 1
+            cantidad: 1,
+            nota: notaNueva
         });
 
         mostrarToast(`${producto.nombre} añadido`);
@@ -277,7 +298,11 @@ function agregarAlCarrito(productoId) {
 
     guardarCarrito(carrito);
     actualizarContadorCarrito();
+
+    // refrescar cards (+/-)
+    mostrarProductosEnCatalogo(productosCatalogo);
 }
+
 
 
 /**TOAST */

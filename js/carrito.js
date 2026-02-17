@@ -44,10 +44,20 @@ function mostrarCarrito() {
 
         CART_ITEMS_CONTAINER.innerHTML += `
             <tr>
-                <td class="d-flex align-items-center gap-3 text-start">
+                <td class="d-flex align-items-start gap-3 text-start">
                     <img src="${item.imagen}" width="60" class="rounded">
-                    <span>${item.nombre}</span>
+
+                    <div class="w-100">
+                        <span class="fw-bold">${item.nombre}</span>
+
+                        <textarea
+                            class="form-control form-control-sm mt-2"
+                            placeholder="Ej: sin cebolla, extra queso..."
+                            onchange="guardarNota(${item.id}, this.value)"
+                        >${item.nota || ""}</textarea>
+                    </div>
                 </td>
+
 
                 <td>$${item.precio.toFixed(2)}</td>
 
@@ -76,6 +86,22 @@ function mostrarCarrito() {
     });
 
     CART_TOTAL_ELEMENT.textContent = `$${total.toFixed(2)}`;
+}
+
+
+//NOTA
+
+function guardarNota(id, texto) {
+    let carrito = obtenerCarrito();
+
+    carrito = carrito.map(item => {
+        if (item.id === id) {
+            item.nota = texto;
+        }
+        return item;
+    });
+
+    guardarCarrito(carrito);
 }
 
 
@@ -143,19 +169,32 @@ function finalizarPedido() {
         return;
     }
 
-    let mensaje = "Hola! Quiero hacer el siguiente pedido:%0A%0A";
+    let mensaje = "Hola! Quiero hacer el siguiente pedido:\n\n";
     let total = 0;
 
     carrito.forEach(item => {
+
         const subtotal = item.precio * item.cantidad;
         total += subtotal;
 
-        mensaje += `• ${item.nombre} x${item.cantidad} - $${subtotal}%0A`;
+        let linea = `• ${item.nombre} x${item.cantidad}`;
+
+        // ✅ agregar nota si existe
+        if (item.nota && item.nota.trim() !== "") {
+            linea += ` (Nota: ${item.nota})`;
+        }
+
+        linea += ` - $${subtotal}\n`;
+
+        mensaje += linea;
     });
 
-    mensaje += `%0A💰 Total: $${total}`;
+    mensaje += `\n💰 Total: $${total}`;
 
     const telefono = "5493518095270";
 
-    window.open(`https://wa.me/${telefono}?text=${mensaje}`, "_blank");
+    // codifica TODO el mensaje al final
+    const mensajeCodificado = encodeURIComponent(mensaje);
+
+    window.open(`https://wa.me/${telefono}?text=${mensajeCodificado}`, "_blank");
 }
