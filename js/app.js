@@ -151,9 +151,11 @@ function mostrarProductosEnCatalogo(productos) {
         const cantidad = cantidadEnCarrito(producto.id);
 
         // Estado de stock
-        const stockStatus = producto.stock > 0
-            ? `<p class="text-success fw-bold mb-2">Disponible (${producto.stock} uds)</p>`
-            : `<p class="text-danger fw-bold mb-2">Agotado</p>`;
+        //const stockStatus = producto.stock > 0
+           // ? `<p class="text-success fw-bold mb-2">Disponible (${producto.stock} uds)</p>`
+            //: `<p class="text-danger fw-bold mb-2">Agotado</p>`;
+
+            const stockStatus = '';
 
         // 🔥 NUEVA LÓGICA DEL BOTÓN (+ / -)
         let button = '';
